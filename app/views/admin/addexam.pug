@@ -1,0 +1,14 @@
+extends ../layouts/default.pug
+
+block page-header
+	h2 Add Exam
+
+block content
+	form(action="/addexam", method="POST", role="form")
+		.form-group
+			label(for="title") Exam Name:
+			input.form-control(name="title" type="text", placeholder="xyz")
+			label(for="code") Exam Code:
+			input.form-control(name="code" type="number", placeholder="123")
+		button.btn.btn-primary(type="submit") Submit 
+		

@@ -1,0 +1,36 @@
+extends ../layouts/default.pug
+
+block page-header
+    h2 Exams Available &ensp;
+      a.btn.btn-danger(href='/admin/addquestion', role='button') Add questions
+
+
+block content      
+  div.viewexam
+
+block foot
+  script(src="/public/js/jquery-2.2.2.js")
+  script(src="/public/js/bootstrap.min.js")
+  script.
+    $(function(){
+        var url = '/api/viewexam';
+        $.getJSON(url, function(json){
+
+          json.forEach( function(element){
+
+            $('.viewexam').append(
+              '<div class="well">'+
+
+                '<h3 class="text-center">'+element.name+'</h3>'+
+                '<p class="text-center">'+element.code+'</p>'+
+                '<a href="#" class="text-center"><p>'
+                  +element.questionList
+                +'</p></a>'+
+
+              '</div>'
+            );
+
+          });
+
+        });
+    });

@@ -1,0 +1,25 @@
+{
+  "name": "imsnoida",
+  "version": "1.0.0",
+  "description": "imsnoida-jet-2017",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.0.0",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.0.0",
+    "express": "^4.15.2",
+    "express-session": "~1.0.0",
+    "method-override": "~1.0.0",
+    "mongoose": "^4.9.3",
+    "morgan": "^1.0.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}

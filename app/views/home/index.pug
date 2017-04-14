@@ -1,0 +1,23 @@
+extends ../layouts/default.pug
+
+block page-header
+  h2 Sign in
+
+block content
+  .container
+      .row
+        |         
+        a.btn.btn-lg.btn-success.btnLogin(href="/usersignin")
+          i.glyphicon.glyphicon-user.pull-left
+          span
+            | User login
+            br
+            small
+        |         
+        a.btn.btn-lg.btn-warning.btnLogin(href="/adminsignin")
+          i.glyphicon.glyphicon-user.pull-left
+          span
+            | Admin login
+            br
+            small    
+         
