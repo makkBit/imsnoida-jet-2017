@@ -12,7 +12,8 @@ To run a local copy of the app:
 `cd ~/pathToRepository/imsnoida-jet-2017`
 
 3. Run a mongodb local server
-```mkdir data
+```
+mkdir data
 mongod --dbpath=./data --port=8000
 ```
 
