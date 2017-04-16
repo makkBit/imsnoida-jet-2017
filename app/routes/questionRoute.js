@@ -6,11 +6,26 @@ var questionController = new QuestionController();
 
 module.exports = function(app, passport){
 
-	app.get('/admin/addquestion', function (req, res) {
-		res.render('./admin/addquestion');
+	app.get('/admin/addquestion', isSignedIn, function (req, res) {
+		res.render('question/addquestion');
 	});
 
-	app.post('/admin/addQuestion', questionController.addQuestion)
+	app.post('/admin/addquestion', isSignedIn, questionController.addQuestion);
+
+	app.get('/admin/viewquestions', isSignedIn, function(req, res){
+		res.render('question/viewquestions');
+	});
+
+	app.post('/api/viewquestions', isSignedIn, questionController.getQuestions);
+
+	 // route middleware to make sure a user is logged in
+	function isSignedIn(req, res, next) {
+	    // if user is authenticated in the session, carry on 
+	    if (req.isAuthenticated())
+	        return next();
+	    // if they aren't, redirect them to the login
+	    res.redirect('/adminsignin');
+	}
 
 }
 

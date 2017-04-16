@@ -14,15 +14,23 @@ var ExamController = function(){
 		exam.code = code;
 
 		exam.save(function(err){
-			if(err) throw err;
-			res.redirect('/viewexam');
+			if(err) { return next(err); }
+			res.redirect('/admin/viewexam');
 		});
 	};
+
+	this.deleteExam = function(req, res){
+		Exam.remove({'code': req.body.examcode}, function(err){
+			if(err) { return next(err); }
+			res.redirect('/admin/viewexam');
+		});
+	};
+
 
 	this.getExams = function(req, res){
 		Exam.find( {} )
 		.exec(function(err, result){
-			if(err) throw err;
+			if(err) { return next(err); }
 			res.json(result);
 		});
 	};

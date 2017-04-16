@@ -5,19 +5,15 @@ block page-header
 
 block content
   .container
-      .row
-        |         
-        a.btn.btn-lg.btn-success.btnLogin(href="/usersignin")
-          i.glyphicon.glyphicon-user.pull-left
-          span
-            | User login
-            br
-            small
-        |         
-        a.btn.btn-lg.btn-warning.btnLogin(href="/adminsignin")
-          i.glyphicon.glyphicon-user.pull-left
-          span
-            | Admin login
-            br
-            small    
+    a(href="/studentsignin")
+      .contain
+        .card
+          h2 Student
+    a(href="/adminsignin")
+      .contain
+        .card
+          h2 Admin
+
+
+
          

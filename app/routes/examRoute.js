@@ -6,19 +6,35 @@ var examController = new ExamController();
 
 module.exports = function(app, passport){
 
-    app.get('/addexam', function(req, res){
-        res.render('./admin/addexam');
+	// 	CREATE
+    app.get('/admin/addexam', isSignedIn, function(req, res){
+        res.render('exam/addexam');
     });
+    app.post('/admin/addexam', examController.addExam);
 
-    app.post('/addexam', examController.addExam);
 
-
-    app.get('/viewexam', function( req, res){
-        res.render('./admin/viewexam');
+    // RETRIEVE
+    app.get('/admin/viewexam', isSignedIn, function( req, res){
+        res.render('exam/viewexam');
     });
+    app.get('/api/viewexam', isSignedIn, examController.getExams);
 
-    // api for ajax request
-    app.get('/api/viewexam', examController.getExams);
+
+    // DELETE
+    app.get('/admin/deleteexam', isSignedIn, function(req, res){
+    	res.render('exam/deleteexam');
+    });
+    app.post('/admin/deleteexam', isSignedIn, examController.deleteExam);
+
+
+     // route middleware to make sure a user is logged in
+    function isSignedIn(req, res, next) {
+        // if user is authenticated in the session, carry on 
+        if (req.isAuthenticated())
+            return next();
+        // if they aren't, redirect them to the login
+        res.redirect('/adminsignin');
+    }
 
 }
 

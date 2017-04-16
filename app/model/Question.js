@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var Exam = require('./Exam');
 
 var questionSchema = Schema({
-	_creator: { type: String, ref: 'Exam'},
+	ofExam: Number,
 	title: String,
 	image: String,
 	options: [{ 

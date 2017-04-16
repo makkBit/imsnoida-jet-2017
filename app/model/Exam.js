@@ -5,10 +5,6 @@ var Question = require('./Question');
 var examSchema = Schema({
 	name: String,
 	code: Number,
-	questionList: [{
-		type: Schema.Types.ObjectId, 
-		ref: 'Question'
-	}],
 	registeredStudent: [String]
 });
 

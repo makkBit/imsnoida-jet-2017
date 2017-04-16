@@ -15,15 +15,10 @@ var QuestionController = function(){
 		var option4 = req.body.option4;
 		var options = [ option1, option2, option3, option4];
 		var correct = req.body.correct;
-
-		console.log(examcode, title, image, options, correct);
-
 		var question = new Question();
-
+		question.ofExam = examcode;
 		question.title = title;
 		question.image = image;
-
-
 		question.options = options.map( function(element, index){
 			if( correct == index+1){
 				return {
@@ -38,22 +33,21 @@ var QuestionController = function(){
 				}
 			}
 		});
-
-		Exam.findOne({ 'code': examcode}, function(err, exam){
-			if(err) throw err;
-			console.log('exam', exam);
-
-			question._creator = exam._id;
-
-			question.save( function(err, data){
-				if(err) throw err;
-				console.log('question'+data);
-				res.end();
-			});
-
+		question.save( function(err, data){
+			if(err) { return next(err); }
+			res.redirect('/admin/addquestion')
 		});
 
 	};
+
+
+
+	this.getQuestions = function(req, res){
+		Question.find({ 'ofExam': req.body.examcode }, function(err, docs){
+			res.json(docs);
+		});
+	};
+
 
 
 };
