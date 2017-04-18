@@ -1,6 +1,6 @@
 var LocalStrategy   = require('passport-local').Strategy;
-
 var Admin = require('../model/Admin');
+var Student = require('../model/Student');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -8,28 +8,46 @@ module.exports = function(passport) {
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
 
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
+    // passport.serializeUser(function(user, done) {
+    //     done(null, user.id);
+    // });
+
+
+    // passport.deserializeUser(function(user, done) {            
+    //   if (isAdmin(user)) {
+    //     Admin.findById(id, function(err, user) {
+    //         done(err, user);
+    //     });
+    //   } 
+    //   else if (isStudent(user)) {
+    //     Student.findById(id, function(err, user) {
+    //         done(err, user);
+    //     });
+    //   }
+    // });
+
+    //used to deserialize the user
+    // passport.deserializeUser(function(id, done) {
+    //     Admin.findById(id, function(err, user) {
+    //         done(err, user);
+    //     });
+    // });
+
+    passport.serializeUser(function (user, done) {
+        done(null, JSON.stringify(user));
     });
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        Admin.findById(id, function(err, user) {
-            done(err, user);
-        });
+    passport.deserializeUser(function (user, done) {
+        done(null, JSON.parse(user));
     });
 
-    // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
 
-    passport.use('local-signup', new LocalStrategy({
+    // =========================================================================
+    // ADMIN SIGNUP ============================================================
+    // =========================================================================
+    passport.use('admin-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
@@ -40,9 +58,7 @@ module.exports = function(passport) {
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
 
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
-        Admin.findOne({ 'local.email' :  email }, function(err, user) {
+        Admin.findOne({ 'email' :  email }, function(err, user) {
             // if there are any errors, return the error
             if(err) { return next(err); }
 
@@ -51,8 +67,6 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
             } else {
 
-                // if there is no user with that email
-                // create the user
                 const newAdmin = new Admin();
 
                 // set the user's local credentials
@@ -72,17 +86,16 @@ module.exports = function(passport) {
 
     }));
 
-
-
-    passport.use('local-login', new LocalStrategy({
+    // =========================================================================
+    // ADMIN SIGNIN ============================================================
+    // =========================================================================
+    passport.use('admin-signin', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField : 'email',
             passwordField : 'password',
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, email, password, done) { // callback with email and password from our form
-            // find a user whose email is the same as the forms email
-            // we are checking to see if the user trying to login already exists
             Admin.findOne({ 'email' :  email }, function(err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
@@ -90,17 +103,89 @@ module.exports = function(passport) {
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); 
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
 
                 // all is well, return successful user
                 return done(null, user);
             });
 
     }));
+
+
+
+    // =========================================================================
+    // STUDENT SIGNUP ============================================================
+    // =========================================================================
+    passport.use('student-signup', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+        process.nextTick(function() {
+            Student.findOne({ 'email' : email }, function(err, user) {
+                // if there are any errors, return the error
+                if(err) { return next(err); }
+
+                // check to see if theres already a user with that email
+                if (user) {
+                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                } else {
+
+                    const newStudent = new Student();
+
+                    // set the user's local credentials
+                    newStudent.email    = email;
+                    newStudent.password = newStudent.generateHash(password);
+                    newStudent.name = req.body.name;
+                    newStudent.fathername = req.body.fathername;
+                    newStudent.dob = req.body.dob;
+                    newStudent.examcode = req.body.examcode;
+
+                    // save the user
+                    newStudent.save(function(err) {
+                        if(err) { return next(err); }
+                        return done(null, newStudent);
+                    });
+                }
+            });    
+        });
+    }));
+
+    // =========================================================================
+    // STUDENT LOGIN ============================================================
+    // =========================================================================
+    passport.use('student-signin', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField : 'email',
+            passwordField : 'password',
+            passReqToCallback : true // allows us to pass back the entire request to the callback
+        },
+        function(req, email, password, done) { // callback with email and password from our form
+           
+            Student.findOne({ 'email' :  email }, function(err, user) {
+                // if there are any errors, return the error before anything else
+                if (err)
+                    return done(err);
+
+                // if no user is found, return the message
+                if (!user)
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); 
+                // if the user is found but the password is wrong
+                if (!user.validPassword(password))
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+
+                // all is well, return successful user
+                return done(null, user);
+            });
+    }));
+
+
+
 
 };
 

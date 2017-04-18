@@ -17,6 +17,7 @@
     "express": "^4.15.2",
     "express-session": "~1.0.0",
     "method-override": "~1.0.0",
+    "moment": "^2.18.1",
     "mongoose": "^4.9.3",
     "morgan": "^1.0.1",
     "passport": "^0.3.2",

@@ -18,9 +18,11 @@ module.exports = function(app, passport){
             // render the page and pass in any flash data if it exists
             if (req.isAuthenticated())
                 res.redirect('/admindashboard');
-            res.render('admin/adminsignin', { message: req.flash('loginMessage') }); 
+            res.render('admin/adminsignin', { 
+                message: req.flash('loginMessage') 
+            }); 
         })
-        .post(passport.authenticate('local-login', {
+        .post(passport.authenticate('admin-signin', {
             successRedirect : 'admindashboard', // redirect to the secure profile section
             failureRedirect : 'adminsignin', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
@@ -28,6 +30,7 @@ module.exports = function(app, passport){
 
 
     app.get('/admindashboard', isSignedIn, function(req, res) {
+        console.log(req.user);
         res.render('admin/admindashboard', {
             user : req.user.email // get the user out of session and pass to template
         });
@@ -40,7 +43,7 @@ module.exports = function(app, passport){
     });
 
 
-	app.post('/adminsignup', passport.authenticate('local-signup'), function(req, res){
+	app.post('/adminsignup', passport.authenticate('admin-signup'), function(req, res){
         res.send({success: 'true'});
     });
 

@@ -48,6 +48,28 @@ var QuestionController = function(){
 		});
 	};
 
+	this.getQuestion = function(req, res){
+		Question.find({ '_id': req.body.id}, function(err, docs){
+			res.json(docs);
+		});
+	};
+
+
+	this.submitQuestion = function(req, res){
+		
+		Question.findById(req.body.qid, function (err, que) {
+		  if (err) return next(err);
+		  
+		  que.options[qans]
+		  tank.save(function (err, updatedTank) {
+		    if (err) return handleError(err);
+		    res.send(updatedTank);
+		  });
+		});
+
+		res.json({bahrandd:req.body});
+	};
+
 
 
 };

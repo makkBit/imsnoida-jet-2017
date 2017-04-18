@@ -241,3 +241,24 @@ body {
 #inputSearch {
     background-color: transparent;
 }
+
+
+/***********************************
+****student/studentdashboard.pug ***
+***********************************/
+.studentdashboard{
+  text-align: center;
+}
+
+
+/***********************************
+****exam/giveexam.pug ***
+***********************************/
+.qnav{
+  padding:15px;
+  margin: 5px;
+}
+
+table{
+  font-size: 20px;
+}

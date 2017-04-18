@@ -1,7 +1,7 @@
 extends ../layouts/default.pug
 
 block page-header
-  h2 User
+  h2 Student
   link(rel="stylesheet", href="/public/css/jquery-ui.min.css")
 
 block content
@@ -22,17 +22,17 @@ block content
           .panel-body
             .row
               .col-lg-12
-                form#login-form(action="", method="post", role="form", style="display: block;")
+                form#login-form(action="/studentsignin", method="post", role="form", style="display: block;")
                   .form-group
-                    input#username.form-control(type="text", name="username", tabindex="1", placeholder="Username", value="")
+                    input#email.form-control(required="true", type="email", name="email", placeholder="@", value="")
                   |                                     
                   .form-group
-                    input#password.form-control(type="password", name="password", tabindex="2", placeholder="Password")
+                    input#password.form-control(required="true", type="password", name="password", placeholder="Password")
                   |                                     
                   .form-group
                     .row
                       .col-sm-6.col-sm-offset-3
-                        input#login-submit.form-control.btn.btn-login(type="submit", name="login-submit", tabindex="4", value="Log In")
+                        input#login-submit.form-control.btn.btn-login(type="submit", name="login-submit", value="Log In")
                   |                                     
                   .form-group
                     .row
@@ -41,29 +41,29 @@ block content
                           a.forgot-password(href="", tabindex="5") Forgot Password?
 
                 |                                 
-                form#register-form(action="", method="post", role="form", style="display: none;")
+                form#register-form(action="/studentsignup", method="post", role="form", style="display: none;")
                   .form-group
-                    input#email.form-control(required="true" type="email", name="email", tabindex="1", placeholder="Email Address", value="")
+                    input#email.form-control(required="true" type="email", name="email", placeholder="Email Address", value="")
                   |                                     
                   .form-group
-                    input#password.form-control(required="true" type="password", name="password", tabindex="2", placeholder="Password")
+                    input#password.form-control(required="true" type="password", name="password", placeholder="Password")
                   |  
                   .form-group
-                    input.form-control(required="true" type="text", name="name", tabindex="1", placeholder="name", value="")
+                    input.form-control(required="true" type="text", name="name", placeholder="name", value="")
                   |  
                   .form-group
-                    input.form-control(required="true" type="text", name="father", tabindex="1", placeholder="father's name", value="")
+                    input.form-control(required="true" type="text", name="fathername", placeholder="father's name", value="")
                   |  
                   .form-group
-                    input#datepicker.form-control(required="true" type="text", name="dob", tabindex="1", placeholder="dob", value="")
+                    input#datepicker.form-control(required="true" type="text", name="dob", placeholder="dob", value="")
                   |  
                   .form-group
-                    input.form-control(required="true" type="number", name="examcode", tabindex="1", placeholder="exam selected (code)", value="")
+                    input.form-control(required="true" type="number", name="examcode", placeholder="exam selected (code)", value="")
                   |                                                                
                   .form-group
                     .row
                       .col-sm-6.col-sm-offset-3
-                        input#register-submit.form-control.btn.btn-register(type="submit", name="register-submit", tabindex="4", value="Register Now")
+                        input#register-submit.form-control.btn.btn-register(type="submit", name="register-submit", value="Register Now")
 
   script(src="/public/js/jquery-2.2.2.js")
   script(src="/public/js/jquery-ui.min.js")
