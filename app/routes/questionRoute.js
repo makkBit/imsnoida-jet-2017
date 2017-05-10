@@ -21,8 +21,6 @@ module.exports = function(app, passport){
 
 	app.post('/api/viewquestion', questionController.getQuestion);
 
-	app.post('/api/submitquestion', questionController.submitQuestion);
-
 
 	 // route middleware to make sure a user is logged in
 	function isSignedIn(req, res, next) {

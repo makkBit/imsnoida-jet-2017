@@ -23,6 +23,11 @@ body {
   font-size: 30px;
 }
 
+.active {
+  background-color: #f4ae5f !important;
+  border-color: black !important;
+}
+
 /***********************************
 ********* home/index.pug *******
 ***********************************/

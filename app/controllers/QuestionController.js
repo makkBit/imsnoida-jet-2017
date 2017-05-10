@@ -55,23 +55,6 @@ var QuestionController = function(){
 	};
 
 
-	this.submitQuestion = function(req, res){
-		
-		Question.findById(req.body.qid, function (err, que) {
-		  if (err) return next(err);
-		  
-		  que.options[qans]
-		  tank.save(function (err, updatedTank) {
-		    if (err) return handleError(err);
-		    res.send(updatedTank);
-		  });
-		});
-
-		res.json({bahrandd:req.body});
-	};
-
-
-
 };
 
 module.exports = QuestionController;

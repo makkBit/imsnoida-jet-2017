@@ -52,6 +52,9 @@ module.exports = function(app, passport){
     });
 
     app.get('/student/giveexam', studentController.giveExam);
+
+
+    app.post('/student/addanswer', studentController.addAnswer);
     
 
     // route middleware to make sure a user is logged in

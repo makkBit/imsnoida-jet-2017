@@ -8,9 +8,9 @@ var studentSchema = mongoose.Schema({
     fathername   : String,
     dob          : Date,
     examcode     : Number,
-    answeredque  : [{ 
-		qid: String,
-		qans: Number
+    answer  : [{ 
+		questionId: String,
+		answeredCorrect: Number
 	}]
  });
 

@@ -30,7 +30,6 @@ module.exports = function(app, passport){
 
 
     app.get('/admindashboard', isSignedIn, function(req, res) {
-        console.log(req.user);
         res.render('admin/admindashboard', {
             user : req.user.email // get the user out of session and pass to template
         });

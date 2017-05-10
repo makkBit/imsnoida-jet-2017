@@ -24,6 +24,8 @@ block foot
            
             $('.qnav').click(function(){
 
+                $("button").removeClass("active");
+                $(this).addClass("active");
                 var qno = $(this).text();
                 var id = $(this).attr("data-id");
                 var url = '/api/viewquestion';
@@ -56,9 +58,9 @@ block foot
                     $('#submitbtn').click(function(){
                       
                       var qid = thequestion._id;
-                      var qans = $('.answer:checked').val();
-                      console.log(qid, qans);
-                      $.post( '/api/submitquestion', { 'qid': qid, 'qans': qans}, function(json){
+                      var answer = $('.answer:checked').val();
+                      console.log(qid, answer);
+                      $.post( '/student/addanswer', { 'questionId': qid, 'answer': answer}, function(json){
                         console.log(json);
                       });
 
