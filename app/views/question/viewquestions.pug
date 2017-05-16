@@ -32,7 +32,6 @@ block foot
 
         $.post( url, { 'examcode': examcode}, function(json){
 
-          console.log(json);
           if(json.length === 0)
             alert('no questions found');
           else{

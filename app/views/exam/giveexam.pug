@@ -21,7 +21,6 @@ block foot
     script(src="/public/js/bootstrap.min.js")
     script.
         $(function(){
-           
             $('.qnav').click(function(){
 
                 $("button").removeClass("active");
@@ -38,7 +37,7 @@ block foot
                       var img = '';
                       
                     $('.displayque').html('<table>'+
-                       '<tr><td><div><p class="question">'+ 
+                       '<tr><td><div><p class="question" data-id="'+ thequestion._id+'" >'+ 
                            qno+'. '+thequestion.title+
                         '</p><ul>'+
                         '<input class="answer" type="radio" name="q1" value="1"><label id="correctString1">'+
@@ -52,24 +51,31 @@ block foot
                         img+
                         '</table>'+
                         `<button type="submit" id="submitbtn" class="btn btn-primary">Submit</button>`
-                    );
-
+                    )
 
                     $('#submitbtn').click(function(){
-                      
-                      var qid = thequestion._id;
-                      var answer = $('.answer:checked').val();
-                      console.log(qid, answer);
-                      $.post( '/student/addanswer', { 'questionId': qid, 'answer': answer}, function(json){
-                        console.log(json);
-                      });
+                        
+                        console.log(id);
+
+                        if ($('.answer').is(":checked"))
+                        {
+                           var answer = $('input.answer:checked').val();
+                           console.log(answer);
+
+                           $.post( '/student/addanswer', { 'questionId': id, 'answer': answer}, function(json){
+
+                                $('.msg').html('success').fadeIn('slow');
+                                $('.msg').delay(500).fadeOut('slow');
+
+                           });
+
+                        }
 
                     });
 
-
                 });
-            });
 
+            });
 
         });
 

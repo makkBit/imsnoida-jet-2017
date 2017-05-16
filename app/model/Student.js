@@ -10,7 +10,7 @@ var studentSchema = mongoose.Schema({
     examcode     : Number,
     answer  : [{ 
 		questionId: String,
-		answeredCorrect: Number
+		answeredCorrect: Boolean
 	}]
  });
 

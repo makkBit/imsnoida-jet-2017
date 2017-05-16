@@ -3,7 +3,8 @@
 *******************************/
 const passportService = require('../services/passport');
 const passport = require('passport');
-
+var StudentController = require('../controllers/StudentController');
+var studentController = new StudentController();
 
 module.exports = function(app, passport){
 
@@ -45,6 +46,14 @@ module.exports = function(app, passport){
 	app.post('/adminsignup', passport.authenticate('admin-signup'), function(req, res){
         res.send({success: 'true'});
     });
+
+
+    app.get('/admin/viewresult', isSignedIn, function(req, res) {
+        res.render('admin/viewresult');
+    });
+
+    app.get('/admin/viewresult/:email', isSignedIn, studentController.retrieveResult);
+
 
     // route middleware to make sure a user is logged in
     function isSignedIn(req, res, next) {
